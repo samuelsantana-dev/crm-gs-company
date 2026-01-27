@@ -1,17 +1,9 @@
-import { Contact } from '@/types/';
-
-interface ContactsListProps {
-  contacts: Contact[];
-  isLoading?: boolean;
-  onSelect?: (contact: Contact) => void;
-}
+import { ContactsListProps } from '@/types/';
 
 export function ContactsList({
   contacts,
-  isLoading = false,
   onSelect
 }: ContactsListProps) {
-
   return (
     <div className="divide-y divide-gray-50">
       {contacts.map(contact => (
