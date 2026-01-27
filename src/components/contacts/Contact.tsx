@@ -1,4 +1,5 @@
 import { ContactsListProps } from '@/types/';
+import { Avatar } from '../ui/Avatar';
 
 export function ContactsList({
   contacts,
@@ -13,11 +14,7 @@ export function ContactsList({
           className="p-4 hover:bg-gray-50 cursor-pointer transition-colors flex gap-3 items-center"
         >
           {contact.profilePicture ? (
-            <img
-              src={contact.profilePicture}
-              alt={contact.name}
-              className="w-10 h-10 rounded-full object-cover"
-            />
+            <Avatar profilePicture={contact.profilePicture} name={contact.name} />
           ) : (
             <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600">
               {contact.name.charAt(0)}

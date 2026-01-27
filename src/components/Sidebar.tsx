@@ -7,9 +7,11 @@ import { Loading } from "./ui/Loading";
 import { AlertError } from "./ui/AlertError";
 import { EmptyState } from "./ui/EmptyState";
 import { FooterSidebar } from "./FooterSidebar";
-import { Input } from "./ui/Input";
+import { Input } from "./ui/InputSearch";
+import { useChat } from '@/contexts/ContactsContext';
 
 export function Sidebar() {
+  const { selectContact } = useChat();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [search, setSearch] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +26,7 @@ export function Sidebar() {
         if(!response.ok) {
           throw new Error(`Erro na requisicão`);
         }
-        const data: Contact[] = await response.json();
+        const data = await response.json();
         setContacts(data);
       } catch (errors) {
         setError("Erro ao buscar contatos");
@@ -76,7 +78,7 @@ export function Sidebar() {
           <ContactsList
             contacts={filteredContacts}
             onSelect={(contact) =>
-              console.log('Contato selecionado:', contact)
+              selectContact(contact)
             }
           />
         )}
