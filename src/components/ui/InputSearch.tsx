@@ -9,9 +9,7 @@ export function Input({ label, placeholder, onChange }: InputProps) {
 
       <div className="relative">
         <input
-          className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                     transition-all"
+          className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           placeholder={placeholder || "Digite aqui..."}
           onChange={(e) => onChange?.(e.target.value)}
         />
