@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { Template } from "@/types"
 import { getTemplates } from "@/services/message.service"
+import { Loading } from "../ui/Loading"
 
 interface Props {
   onSelect: (content: string) => void
@@ -11,15 +12,22 @@ interface Props {
 export function MessageTemplates({ onSelect }: Props) {
   const [templates, setTemplates] = useState<Template[]>([])
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     async function fetchTemplates() {
-      
-      const data = await getTemplates()
-      setTemplates(data)
+      try {
+        setLoading(true)
+        const data = await getTemplates();
+        setTemplates(data);
+      } catch (error) {
+        console.error("Erro ao buscar templates:", error);
+      } finally {
+        setLoading(false);
+      }
     }
-    fetchTemplates()
-  }, [])
+    fetchTemplates();
+  }, []);
 
   function handleSelect(content: string) {
     onSelect(content)
@@ -32,9 +40,14 @@ export function MessageTemplates({ onSelect }: Props) {
         onClick={() => setOpen(!open)}
         className="p-2 rounded-full hover:bg-gray-100 transition"
         title="Respostas rápidas"
+        aria-label="Respostas rápidas"
       >
         ⚡
       </button>
+
+      {open && loading && (
+        <Loading text="Carregando templates..." />
+      )}
 
       {open && (
         <div className="absolute bottom-12 right-0 w-72 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden animate-fade-in">

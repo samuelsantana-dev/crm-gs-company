@@ -1,4 +1,3 @@
-import { useRef } from "react";
 
 interface Props {
   loading: boolean
@@ -6,8 +5,7 @@ interface Props {
   buttonRef: React.RefObject<HTMLButtonElement | null>
 }
 
-export function CampaignsHeader({ loading, onReload }: Props) {
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
+export function CampaignsHeader({ loading, onReload, buttonRef }: Props) {
   return (
     <div className="px-5 py-4 border-b font-semibold text-gray-800 flex justify-between items-center">
       <span>📣 Campanhas</span>
