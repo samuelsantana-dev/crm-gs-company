@@ -48,7 +48,7 @@ useEffect(() => {
     <aside className="w-80 h-full border-r border-gray-200 bg-white flex flex-col shadow-sm z-10">
       <div className="p-4 border-b border-gray-100 bg-gray-50">
         <div className="flex items-center justify-between mb-4">
-          <Link href="/dashboard">
+          <Link href="/dashboard/homeDashboard" className="flex items-center gap-2">
             <h2>Dashboard</h2>
           </Link>
           <h2 className="text-xl font-bold text-gray-800">Conversas</h2>
