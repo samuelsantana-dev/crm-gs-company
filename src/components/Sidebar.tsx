@@ -9,6 +9,7 @@ import { EmptyState } from "./ui/EmptyState";
 import { FooterSidebar } from "./FooterSidebar";
 import { Input } from "./ui/InputSearch";
 import { useChat } from '@/contexts/ContactsContext';
+import { getContacts } from "@/services/contacts.service"
 
 export function Sidebar() {
   const { selectContact } = useChat();
@@ -17,27 +18,25 @@ export function Sidebar() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function fetchContacts() {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await fetch('/api/contacts');
-        if(!response.ok) {
-          throw new Error(`Erro na requisicão`);
-        }
-        const data = await response.json();
-        setContacts(data);
-      } catch (errors) {
-        setError("Erro ao buscar contatos");
-        console.log("Erro ao buscar contatos:", errors);
-      } finally {
-        setLoading(false);
-      }
-    }
+useEffect(() => {
+  async function fetchContacts() {
+    try {
+      setLoading(true);
+      setError(null);
 
-    fetchContacts();
-  }, []);
+      const data = await getContacts();
+      setContacts(data);
+    } catch (error) {
+      setError("Erro ao buscar contatos");
+      console.error("Erro ao buscar contatos:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  fetchContacts();
+}, []);
+
 
   const filteredContacts = contacts.filter((contactsFilter) =>
     contactsFilter.name
