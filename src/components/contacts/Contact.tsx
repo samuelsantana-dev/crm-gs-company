@@ -1,5 +1,10 @@
-import { ContactsListProps } from '@/types/';
+import { Contact } from '@/types';
 import { Avatar } from '../ui/Avatar';
+
+interface ContactsListProps {
+  contacts: Contact[];
+  onSelect?: (contact: Contact) => void;
+}
 
 export function ContactsList({
   contacts,
