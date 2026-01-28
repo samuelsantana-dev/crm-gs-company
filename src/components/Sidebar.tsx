@@ -10,6 +10,7 @@ import { FooterSidebar } from "./FooterSidebar";
 import { Input } from "./ui/InputSearch";
 import { useChat } from '@/contexts/ContactsContext';
 import { getContacts } from "@/services/contacts.service"
+import Link from "next/link";
 
 export function Sidebar() {
   const { selectContact } = useChat();
@@ -47,6 +48,9 @@ useEffect(() => {
     <aside className="w-80 h-full border-r border-gray-200 bg-white flex flex-col shadow-sm z-10">
       <div className="p-4 border-b border-gray-100 bg-gray-50">
         <div className="flex items-center justify-between mb-4">
+          <Link href="/dashboard">
+            <h2>Dashboard</h2>
+          </Link>
           <h2 className="text-xl font-bold text-gray-800">Conversas</h2>
           <span className="text-xs font-medium bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
             {contacts.length} Ativas
