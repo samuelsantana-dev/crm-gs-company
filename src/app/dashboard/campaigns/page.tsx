@@ -1,4 +1,4 @@
-import { CampaignsList } from '@/components/campaing/CampaignsList';
+import { CampaignsList } from '@/components/campaign/CampaignsList';
 import { SidebarNavigation } from '@/components/navigation/DashboardSidebar';
 
 export default function Campaings() {

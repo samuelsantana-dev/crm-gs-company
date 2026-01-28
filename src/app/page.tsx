@@ -1,4 +1,4 @@
-import { ApiRoute } from '@/components/ApiRoute';
+import { ApiRoute } from '@/components/providers/ApiRoute';
 import Card from '@/components/ui/Card';
 import Link from 'next/link';
 
