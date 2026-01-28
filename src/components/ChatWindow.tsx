@@ -8,6 +8,9 @@ import { EmptyMessage } from './messages/EmptyMessage';
 import { Loading } from './ui/Loading';
 import { ChatInput } from './messages/ChatInput';
 import { SendButton } from './messages/SendButton';
+import { MessageTemplates } from './chats/MessageTemplates';
+import { InternalNotes } from './contacts/InternalNotes';
+import { getMessagesByContact, sendMessage } from '@/services/message.service';
 
 export function ChatWindow() {
   const { selectedContact } = useChat();
@@ -16,30 +19,25 @@ export function ChatWindow() {
   const [loading, setLoading] = useState(false);
   const [messageText, setMessageText] = useState("");
 
-  useEffect(() => {
-    if (!selectedContact) return;
-    async function fetchMessageChat() {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await fetch(
-          `/api/messages?contactId=${selectedContact?.id}`,
-        );
-        if (!response.ok) {
-          throw new Error("Erro na requisição");
-        }
-        const data = await response.json();
-        console.log("🚀 ~ fetchMessageChat ~ data:", data)
-        setMessages(data);
-      } catch (error) {
-        setError("Erro ao buscar mensagens");
-        console.log("Erro ao buscar mensagens:", error);
-      } finally {
-        setLoading(false);
-      }
+ useEffect(() => {
+   async function fetchMessageChat() {
+     try {
+       setLoading(true)
+       setError(null)
+       
+       if (!selectedContact) return
+      const data = await getMessagesByContact(selectedContact.id)
+      setMessages(data)
+    } catch (error) {
+      setError("Erro ao buscar mensagens")
+      console.error("Erro ao buscar mensagens:", error)
+    } finally {
+      setLoading(false)
     }
-    fetchMessageChat();
-  }, [selectedContact]);
+  }
+
+  fetchMessageChat()
+}, [selectedContact])
   
   async function handleSendMessage() {
     if (!messageText.trim() || !selectedContact) return;
@@ -58,11 +56,7 @@ export function ChatWindow() {
 
     try {
       setLoading(true);
-      await fetch("/api/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newMessage),
-      });
+      await sendMessage(newMessage)
     } catch (error) {
       console.error("Erro ao enviar mensagem", error);
     } finally {
@@ -102,7 +96,7 @@ export function ChatWindow() {
           <EmptyMessage
             title="Nenhuma mensagem ainda"
             textParaph="Comece a conversar enviando a primeira mensagem!"
-            divText=" Ambiente de Teste"
+            divText="Ambiente de Teste"
           />
         )}
 
@@ -124,6 +118,8 @@ export function ChatWindow() {
             disabled={!selectedContact}
           />
 
+          <MessageTemplates onSelect={setMessageText} />
+          <InternalNotes contactId={selectedContact?.id || ""} />
           <SendButton
             onClick={handleSendMessage}
             disabled={!selectedContact || !messageText.trim()}

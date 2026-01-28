@@ -1,6 +1,19 @@
 export type MessageStatus = 'sent' | 'delivered' | 'read' | 'failed';
 export type MessageDirection = 'inbound' | 'outbound';
 
+export interface Note {
+  id: string
+  contactId: string
+  content: string
+  createdAt: string
+}
+
+export interface Template {
+  id: string
+  name: string
+  content: string
+}
+
 export interface InputProps {
   label?: string;
   placeholder?: string;
